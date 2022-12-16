@@ -17,6 +17,10 @@ func SetDefaultMessageAction(err error, response MessageAction) error {
 
 // GetDefaultMessageAction ...
 func GetDefaultMessageAction(err error) MessageAction {
+	if err == nil {
+		return SuccessMessageAction
+	}
+
 	currentMessageAction := DeadLetterMessageAction
 
 	var ok bool = true

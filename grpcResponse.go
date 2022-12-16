@@ -20,6 +20,10 @@ func SetDefaultGrpcResponse(err error, response codes.Code) error {
 
 // GetDefaultGrpcResponse ...
 func GetDefaultGrpcResponse(err error) codes.Code {
+	if err == nil {
+		return codes.OK
+	}
+
 	currentGrpcResponse := codes.Internal
 
 	var ok bool = true

@@ -20,6 +20,13 @@ func SetDefaultHTTPResponse(err error, response HTTPResponse) error {
 
 // GetDefaultHTTPResponse ...
 func GetDefaultHTTPResponse(err error) HTTPResponse {
+	if err == nil {
+		return HTTPResponse{
+			Message: http.StatusText(http.StatusOK),
+			Status:  http.StatusOK,
+		}
+	}
+
 	currentHTTPResponse := HTTPResponse{
 		Message: http.StatusText(http.StatusInternalServerError),
 		Status:  http.StatusInternalServerError,
