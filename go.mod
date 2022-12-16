@@ -1,4 +1,4 @@
-module github.com/roxy
+module github.com/TheRafaBonin/roxy
 
 go 1.19
 
