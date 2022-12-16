@@ -5,6 +5,10 @@ import (
 )
 
 func new(err error) error {
+	if err == nil {
+		return nil
+	}
+
 	return &detailedError{
 		err: err,
 	}

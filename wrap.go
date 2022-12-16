@@ -7,6 +7,10 @@ import (
 )
 
 func wrap(err error, msg string) error {
+	if err == nil {
+		return nil
+	}
+
 	eDetailedError, ok := err.(*detailedError)
 	if !ok {
 		return new(eris.Wrap(err, msg))
