@@ -7,6 +7,10 @@ import (
 
 // SetDefaultHTTPResponse ...
 func SetDefaultHTTPResponse(err error, response HTTPResponse) error {
+	if err == nil {
+		return nil
+	}
+
 	errType := reflect.TypeOf(err)
 	if errType != reflect.TypeOf(detailedError{}) {
 		err = new(err)
@@ -14,7 +18,7 @@ func SetDefaultHTTPResponse(err error, response HTTPResponse) error {
 
 	eDetailedError := err.(*detailedError)
 
-	(*eDetailedError).defaultHTTPResponse = response
+	(*eDetailedError).defaultHTTPResponse = &response
 	return eDetailedError
 }
 
@@ -45,8 +49,8 @@ func GetDefaultHTTPResponse(err error) HTTPResponse {
 		}
 
 		detailedErr, valid := u.(*detailedError)
-		if (valid && detailedErr.defaultHTTPResponse != HTTPResponse{}) {
-			currentHTTPResponse = detailedErr.defaultHTTPResponse
+		if valid && detailedErr.defaultHTTPResponse != nil {
+			return *detailedErr.defaultHTTPResponse
 		}
 	}
 

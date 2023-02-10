@@ -2,8 +2,10 @@ package roxy
 
 import (
 	"errors"
+	"fmt"
 	"testing"
 
+	"github.com/rotisserie/eris"
 	"google.golang.org/grpc/codes"
 )
 
@@ -11,6 +13,7 @@ func TestGrpcResponse(t *testing.T) {
 	t.Parallel()
 	t.Run("TestSetDefaultGrpcResponse", testSetDefaultGrpcResponse)
 	t.Run("TestGetDefaultGrpcResponse", testGetDefaultGrpcResponse)
+	t.Run("TestSetDefaultGrpcResponseNil", testSetDefaultGrpcResponseNil)
 	t.Run("TestGetCustomDefaultGrpcResponse", testGetCustomDefaultGrpcResponse)
 }
 
@@ -37,13 +40,24 @@ func testGetDefaultGrpcResponse(t *testing.T) {
 	err := errors.New("Root error")
 	defaultGrpcResponse := codes.Internal
 
-	err = Wrap(err, "Another error")
-	err = Wrap(err, "Another error")
-	err = Wrap(err, "Another error")
+	err = Wrap(err, "Another error 1")
+	err = Wrap(err, "Another error 2")
+	err = Wrap(err, "Another error 3")
 
-	httpResponse := GetDefaultGrpcResponse(err)
-	if httpResponse != defaultGrpcResponse {
-		t.Errorf("Responses do not match; %v; %v", httpResponse, defaultGrpcResponse)
+	grpcResponse := GetDefaultGrpcResponse(err)
+	if grpcResponse != defaultGrpcResponse {
+		t.Errorf("Responses do not match; %v; %v", grpcResponse, defaultGrpcResponse)
+	}
+}
+
+func testSetDefaultGrpcResponseNil(t *testing.T) {
+	t.Parallel()
+
+	var err error
+	err = SetDefaultGrpcResponse(err, codes.Canceled)
+
+	if err != nil {
+		t.Error("Error should be nil")
 	}
 }
 
@@ -51,15 +65,19 @@ func testGetCustomDefaultGrpcResponse(t *testing.T) {
 	t.Parallel()
 
 	err := errors.New("Root error")
-	defaultGrpcResponse := codes.OK
+	defaultGrpcResponse := codes.NotFound
 
-	err = Wrap(err, "Another error")
+	err = Wrap(err, "Another error 1")
+	err = SetDefaultGrpcResponse(err, codes.Aborted)
+	err = Wrap(err, "Another error 2")
+	err = Wrap(err, "Another error 3")
 	err = SetDefaultGrpcResponse(err, defaultGrpcResponse)
-	err = Wrap(err, "Another error")
-	err = Wrap(err, "Another error")
+	err = wrap(err, "Another error 4")
+	err = eris.Wrap(err, "Another error 5")
 
-	httpResponse := GetDefaultGrpcResponse(err)
-	if httpResponse != defaultGrpcResponse {
-		t.Errorf("Responses do not match; %v; %v", httpResponse, defaultGrpcResponse)
+	fmt.Println("From here")
+	grpcResponse := GetDefaultGrpcResponse(err)
+	if grpcResponse != defaultGrpcResponse {
+		t.Errorf("Responses do not match; %v; %v", grpcResponse, defaultGrpcResponse)
 	}
 }

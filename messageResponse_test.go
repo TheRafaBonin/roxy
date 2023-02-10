@@ -35,9 +35,9 @@ func testGetDefaultMessageAction(t *testing.T) {
 	err := errors.New("Root error")
 	defaultMessageAction := DeadLetterMessageAction
 
-	err = Wrap(err, "Another error")
-	err = Wrap(err, "Another error")
-	err = Wrap(err, "Another error")
+	err = Wrap(err, "Another error 1")
+	err = Wrap(err, "Another error 2")
+	err = Wrap(err, "Another error 3")
 
 	httpResponse := GetDefaultMessageAction(err)
 	if httpResponse != defaultMessageAction {
@@ -50,11 +50,12 @@ func testGetCustomDefaultMessageAction(t *testing.T) {
 
 	err := errors.New("Root error")
 	defaultMessageAction := RequeueMessageAction
+	err = SetDefaultMessageAction(err, DropMessageAction)
 
-	err = Wrap(err, "Another error")
+	err = Wrap(err, "Another error 1")
+	err = Wrap(err, "Another error 2")
 	err = SetDefaultMessageAction(err, defaultMessageAction)
-	err = Wrap(err, "Another error")
-	err = Wrap(err, "Another error")
+	err = Wrap(err, "Another error 3")
 
 	httpResponse := GetDefaultMessageAction(err)
 	if httpResponse != defaultMessageAction {

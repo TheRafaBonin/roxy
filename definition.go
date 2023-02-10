@@ -25,7 +25,7 @@ const (
 type detailedError struct {
 	err                  error
 	defaultGrpcResponse  *codes.Code
-	defaultHTTPResponse  HTTPResponse
+	defaultHTTPResponse  *HTTPResponse
 	defaultMessageAction *MessageAction
 }
 

@@ -8,6 +8,10 @@ import (
 
 // SetDefaultGrpcResponse ...
 func SetDefaultGrpcResponse(err error, response codes.Code) error {
+	if err == nil {
+		return nil
+	}
+
 	errType := reflect.TypeOf(err)
 	if errType != reflect.TypeOf(detailedError{}) {
 		err = new(err)
@@ -40,7 +44,7 @@ func GetDefaultGrpcResponse(err error) codes.Code {
 
 		detailedErr, valid := u.(*detailedError)
 		if valid && detailedErr.defaultGrpcResponse != nil {
-			currentGrpcResponse = *detailedErr.defaultGrpcResponse
+			return *detailedErr.defaultGrpcResponse
 		}
 	}
 

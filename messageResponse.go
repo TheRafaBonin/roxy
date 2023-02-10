@@ -4,6 +4,10 @@ import "reflect"
 
 // SetDefaultMessageAction ...
 func SetDefaultMessageAction(err error, response MessageAction) error {
+	if err == nil {
+		return nil
+	}
+
 	errType := reflect.TypeOf(err)
 	if errType != reflect.TypeOf(detailedError{}) {
 		err = new(err)
@@ -37,7 +41,7 @@ func GetDefaultMessageAction(err error) MessageAction {
 
 		detailedErr, valid := u.(*detailedError)
 		if valid && detailedErr.defaultMessageAction != nil {
-			currentMessageAction = *detailedErr.defaultMessageAction
+			return *detailedErr.defaultMessageAction
 		}
 	}
 
