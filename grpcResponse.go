@@ -13,7 +13,7 @@ func SetDefaultGrpcResponse(err error, response codes.Code) error {
 	}
 
 	errType := reflect.TypeOf(err)
-	if errType != reflect.TypeOf(detailedError{}) {
+	if errType != reflect.TypeOf(&detailedError{}) {
 		err = new(err)
 	}
 

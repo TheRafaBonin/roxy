@@ -1,6 +1,8 @@
 package roxy
 
-import "reflect"
+import (
+	"reflect"
+)
 
 // DefaultMessageResponse values
 const (
@@ -17,7 +19,7 @@ func SetDefaultMessageAction(err error, response MessageAction) error {
 	}
 
 	errType := reflect.TypeOf(err)
-	if errType != reflect.TypeOf(detailedError{}) {
+	if errType != reflect.TypeOf(&detailedError{}) {
 		err = new(err)
 	}
 

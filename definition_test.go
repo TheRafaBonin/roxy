@@ -7,7 +7,7 @@ import (
 
 func TestDefinition(t *testing.T) {
 	t.Parallel()
-	t.Run("testError", testError)
+	t.Run("testError", testAttributes)
 	t.Run("testUnwrap", testUnwrap)
 }
 

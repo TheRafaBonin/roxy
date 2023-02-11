@@ -12,7 +12,7 @@ func SetDefaultHTTPResponse(err error, response HTTPResponse) error {
 	}
 
 	errType := reflect.TypeOf(err)
-	if errType != reflect.TypeOf(detailedError{}) {
+	if errType != reflect.TypeOf(&detailedError{}) {
 		err = new(err)
 	}
 

@@ -34,7 +34,7 @@ func SetErrorLogLevel(err error, level LogLevel) error {
 	}
 
 	errType := reflect.TypeOf(err)
-	if errType != reflect.TypeOf(detailedError{}) {
+	if errType != reflect.TypeOf(&detailedError{}) {
 		err = new(err)
 	}
 
