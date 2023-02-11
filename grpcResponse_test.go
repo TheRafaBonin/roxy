@@ -2,7 +2,6 @@ package roxy
 
 import (
 	"errors"
-	"fmt"
 	"testing"
 
 	"github.com/rotisserie/eris"
@@ -75,7 +74,6 @@ func testGetCustomDefaultGrpcResponse(t *testing.T) {
 	err = wrap(err, "Another error 4")
 	err = eris.Wrap(err, "Another error 5")
 
-	fmt.Println("From here")
 	grpcResponse := GetDefaultGrpcResponse(err)
 	if grpcResponse != defaultGrpcResponse {
 		t.Errorf("Responses do not match; %v; %v", grpcResponse, defaultGrpcResponse)

@@ -11,19 +11,15 @@ type HTTPResponse struct {
 }
 
 // MessageAction defines a default message response
-type MessageAction int
+type MessageAction int8
 
-// DefaultMessageResponse values
-const (
-	DropMessageAction MessageAction = iota
-	SuccessMessageAction
-	RequeueMessageAction
-	DeadLetterMessageAction
-)
+// LogLevel defines the log level
+type LogLevel int8
 
 // detailedError a error that wraps a random error
 type detailedError struct {
 	err                  error
+	errLogLevel          *LogLevel
 	defaultGrpcResponse  *codes.Code
 	defaultHTTPResponse  *HTTPResponse
 	defaultMessageAction *MessageAction

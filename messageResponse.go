@@ -2,6 +2,14 @@ package roxy
 
 import "reflect"
 
+// DefaultMessageResponse values
+const (
+	DropMessageAction MessageAction = iota
+	SuccessMessageAction
+	RequeueMessageAction
+	DeadLetterMessageAction
+)
+
 // SetDefaultMessageAction ...
 func SetDefaultMessageAction(err error, response MessageAction) error {
 	if err == nil {
