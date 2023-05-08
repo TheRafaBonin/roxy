@@ -19,6 +19,7 @@ type LogLevel int8
 // detailedError a error that wraps a random error
 type detailedError struct {
 	err                  error
+	publicErr            error
 	errLogLevel          *LogLevel
 	defaultGrpcResponse  *codes.Code
 	defaultHTTPResponse  *HTTPResponse
