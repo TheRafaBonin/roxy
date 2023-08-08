@@ -14,7 +14,10 @@ func TestAttributes(t *testing.T) {
 func testAttributes(t *testing.T) {
 	err := Errorf("New %s", "error")
 	err = SetErrorLogLevel(err, WarnLevel)
-	err = SetDefaultGrpcResponse(err, codes.Canceled)
+	err = SetDefaultGrpcResponse(err, GrpcResponse{
+		Message: "canceled message",
+		Code:    codes.Canceled,
+	})
 	err = SetDefaultMessageAction(err, DropMessageAction)
 
 	logLevel := GetErrorLogLevel(err)
@@ -23,8 +26,11 @@ func testAttributes(t *testing.T) {
 	}
 
 	grpcResponse := GetDefaultGrpcResponse(err)
-	if grpcResponse != codes.Canceled {
-		t.Errorf("%v should be equal to %v", grpcResponse, codes.Canceled)
+	if grpcResponse.Code != codes.Canceled {
+		t.Errorf("%v should be equal to %v", grpcResponse.Code, codes.Canceled)
+	}
+	if grpcResponse.Message != "canceled message" {
+		t.Errorf("%v should be equal to %v", grpcResponse.Message, "canceled message")
 	}
 
 	messageAction := GetDefaultMessageAction(err)

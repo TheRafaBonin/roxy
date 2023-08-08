@@ -27,7 +27,7 @@ const (
 	TraceLevel LogLevel = -1
 )
 
-// SetErrorLogLevel ...
+// SetErrorLogLevel defines in which level we should log an error
 func SetErrorLogLevel(err error, level LogLevel) error {
 	if err == nil {
 		return nil
@@ -43,7 +43,7 @@ func SetErrorLogLevel(err error, level LogLevel) error {
 	return eDetailedError
 }
 
-// GetErrorLogLevel ...
+// GetErrorLogLevel gets the defined level we should log an error
 func GetErrorLogLevel(err error) LogLevel {
 	if err == nil {
 		return InfoLevel

@@ -5,7 +5,20 @@ import (
 	"reflect"
 )
 
-// SetDefaultHTTPResponse ...
+// OkHTTPResponse defines the default HTTP OK response for nil errors
+var OkHTTPResponse = HTTPResponse{
+	Message: http.StatusText(http.StatusOK),
+	Status:  http.StatusOK,
+}
+
+// UnhandledHTTPResponse defines a default response for an error that
+// has not been attributed any other HTTP response
+var UnhandledHTTPResponse = HTTPResponse{
+	Message: http.StatusText(http.StatusInternalServerError),
+	Status:  http.StatusInternalServerError,
+}
+
+// SetDefaultHTTPResponse sets the error HTTP response to a defined response
 func SetDefaultHTTPResponse(err error, response HTTPResponse) error {
 	if err == nil {
 		return nil
@@ -22,19 +35,13 @@ func SetDefaultHTTPResponse(err error, response HTTPResponse) error {
 	return eDetailedError
 }
 
-// GetDefaultHTTPResponse ...
+// GetDefaultHTTPResponse gets the error set HTTP response
 func GetDefaultHTTPResponse(err error) HTTPResponse {
 	if err == nil {
-		return HTTPResponse{
-			Message: http.StatusText(http.StatusOK),
-			Status:  http.StatusOK,
-		}
+		return OkHTTPResponse
 	}
 
-	currentHTTPResponse := HTTPResponse{
-		Message: http.StatusText(http.StatusInternalServerError),
-		Status:  http.StatusInternalServerError,
-	}
+	currentHTTPResponse := UnhandledHTTPResponse
 
 	var ok bool = true
 	var u interface {

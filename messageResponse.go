@@ -12,7 +12,7 @@ const (
 	DeadLetterMessageAction
 )
 
-// SetDefaultMessageAction ...
+// SetDefaultMessageAction sets the error message response to a defined response
 func SetDefaultMessageAction(err error, response MessageAction) error {
 	if err == nil {
 		return nil
@@ -29,7 +29,7 @@ func SetDefaultMessageAction(err error, response MessageAction) error {
 	return eDetailedError
 }
 
-// GetDefaultMessageAction ...
+// GetDefaultMessageAction gets the error set message response
 func GetDefaultMessageAction(err error) MessageAction {
 	if err == nil {
 		return SuccessMessageAction

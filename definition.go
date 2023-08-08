@@ -1,13 +1,17 @@
 package roxy
 
-import (
-	"google.golang.org/grpc/codes"
-)
+import "google.golang.org/grpc/codes"
 
 // HTTPResponse defines a default http response
 type HTTPResponse struct {
 	Message string
 	Status  int
+}
+
+// GrpcResponse defines a default grpc response
+type GrpcResponse struct {
+	Message string
+	Code    codes.Code
 }
 
 // MessageAction defines a default message response
@@ -21,7 +25,7 @@ type detailedError struct {
 	err                  error
 	publicErr            error
 	errLogLevel          *LogLevel
-	defaultGrpcResponse  *codes.Code
+	defaultGrpcResponse  *GrpcResponse
 	defaultHTTPResponse  *HTTPResponse
 	defaultMessageAction *MessageAction
 }
