@@ -20,7 +20,9 @@ func testSetDefaultGrpcResponse(t *testing.T) {
 	t.Parallel()
 
 	err := errors.New("Root error")
-	defaultGrpcResponse := codes.OK
+	defaultGrpcResponse := GrpcResponse{
+		Code: codes.Canceled,
+	}
 
 	err = SetDefaultGrpcResponse(err, defaultGrpcResponse)
 
@@ -37,7 +39,10 @@ func testGetDefaultGrpcResponse(t *testing.T) {
 	t.Parallel()
 
 	err := errors.New("Root error")
-	defaultGrpcResponse := codes.Internal
+	defaultGrpcResponse := GrpcResponse{
+		Message: "internal server error",
+		Code:    codes.Internal,
+	}
 
 	err = Wrap(err, "Another error 1")
 	err = Wrap(err, "Another error 2")
@@ -53,7 +58,9 @@ func testSetDefaultGrpcResponseNil(t *testing.T) {
 	t.Parallel()
 
 	var err error
-	err = SetDefaultGrpcResponse(err, codes.Canceled)
+	err = SetDefaultGrpcResponse(err, GrpcResponse{
+		Code: codes.Canceled,
+	})
 
 	if err != nil {
 		t.Error("Error should be nil")
@@ -64,10 +71,14 @@ func testGetCustomDefaultGrpcResponse(t *testing.T) {
 	t.Parallel()
 
 	err := errors.New("Root error")
-	defaultGrpcResponse := codes.NotFound
+	defaultGrpcResponse := GrpcResponse{
+		Code: codes.NotFound,
+	}
 
 	err = Wrap(err, "Another error 1")
-	err = SetDefaultGrpcResponse(err, codes.Aborted)
+	err = SetDefaultGrpcResponse(err, GrpcResponse{
+		Code: codes.Aborted,
+	})
 	err = Wrap(err, "Another error 2")
 	err = Wrap(err, "Another error 3")
 	err = SetDefaultGrpcResponse(err, defaultGrpcResponse)
