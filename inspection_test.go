@@ -25,7 +25,7 @@ func testCause(t *testing.T) {
 	baseError := errors.New("BaseError")
 	wrappedError := Wrap(baseError, "Another Error")
 
-	err := Cause(wrappedError, baseError)
+	err := Cause(wrappedError)
 	if err != baseError {
 		t.Error("wrapped error should be caused by baseError")
 	}
