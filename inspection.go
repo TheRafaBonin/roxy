@@ -17,6 +17,6 @@ func Is(err error, target error) bool {
 
 // Cause returns the root cause of the error, which is defined as the first error in the chain. The original
 // error is returned if it does not implement `Unwrap() error` and nil is returned if the error is nil.
-func Cause(err error, target error) error {
+func Cause(err error) error {
 	return eris.Cause(err)
 }
