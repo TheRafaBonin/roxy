@@ -15,17 +15,17 @@ func TestNew(t *testing.T) {
 func testNew(t *testing.T) {
 	tests := []struct {
 		name string
-		opts []NewErrorOptions
+		opts []NewErrorOption
 	}{
 		{
 			name: "WithMessageAction",
-			opts: []NewErrorOptions{
+			opts: []NewErrorOption{
 				WithMessageAction(DropMessageAction),
 			},
 		},
 		{
 			name: "WithHTTPResponse",
-			opts: []NewErrorOptions{
+			opts: []NewErrorOption{
 				WithHTTPResponse(HTTPResponse{
 					Message: "test",
 					Status:  200,
@@ -34,7 +34,7 @@ func testNew(t *testing.T) {
 		},
 		{
 			name: "WithGrpcResponse",
-			opts: []NewErrorOptions{
+			opts: []NewErrorOption{
 				WithGrpcResponse(GrpcResponse{
 					Message: "test",
 					Code:    0,
@@ -43,19 +43,19 @@ func testNew(t *testing.T) {
 		},
 		{
 			name: "WithLogLevel",
-			opts: []NewErrorOptions{
+			opts: []NewErrorOption{
 				WithLogLevel(DebugLevel),
 			},
 		},
 		{
 			name: "WithPublicError",
-			opts: []NewErrorOptions{
+			opts: []NewErrorOption{
 				WithPublicError(errors.New("test")),
 			},
 		},
 		{
 			name: "WithMessageAction, WithHTTPResponse, WithGrpcResponse, WithLogLevel, WithPublicError",
-			opts: []NewErrorOptions{
+			opts: []NewErrorOption{
 				WithMessageAction(DropMessageAction),
 				WithHTTPResponse(HTTPResponse{
 					Message: "test",
@@ -71,7 +71,7 @@ func testNew(t *testing.T) {
 		},
 		{
 			name: "BaseError",
-			opts: []NewErrorOptions{},
+			opts: []NewErrorOption{},
 		},
 	}
 	for _, tt := range tests {
