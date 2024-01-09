@@ -15,8 +15,12 @@ func new(err error) error {
 }
 
 // New ...
-func New(msg string) error {
+func New(msg string, opts ...NewErrorOption) error {
 	newError := eris.New(msg)
+	for _, opt := range opts {
+		newError = opt(newError)
+	}
+
 	return new(newError)
 }
 
