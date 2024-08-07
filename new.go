@@ -17,11 +17,13 @@ func new(err error) error {
 // New ...
 func New(msg string, opts ...NewErrorOption) error {
 	newError := eris.New(msg)
+	roxyErr := new(newError)
+
 	for _, opt := range opts {
-		newError = opt(newError)
+		roxyErr = opt(roxyErr)
 	}
 
-	return new(newError)
+	return roxyErr
 }
 
 // Errorf ...
