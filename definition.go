@@ -34,6 +34,6 @@ func (de detailedError) Error() string {
 	return de.err.Error()
 }
 
-func (de *detailedError) Unwrap() error {
-	return Unwrap(de.err)
+func (de detailedError) Unwrap() error {
+	return de.err
 }
